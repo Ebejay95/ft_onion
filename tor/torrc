@@ -1,2 +1,8 @@
+# Define the directory where the Tor service will store its hidden service keys and hostname.
+# Make sure this directory is writable by the Tor process and exists on the system.
 HiddenServiceDir /var/lib/tor/hidden_service/
+
+# Specify the mapping between the hidden service and the local web service.
+# The first number (80) is the hidden service's port that clients will connect to.
+# The second part (web:80) forwards traffic to the local service running on port 80 of the machine named "web".
 HiddenServicePort 80 web:80

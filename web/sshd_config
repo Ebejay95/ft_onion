@@ -1,9 +1,26 @@
-Port 4242
-PermitRootLogin no
-PasswordAuthentication yes
-ChallengeResponseAuthentication no
-UsePAM yes
-X11Forwarding yes
-PrintMotd no
-AcceptEnv LANG LC_*
-Subsystem sftp /usr/lib/openssh/sftp-server
+# Specify the port the SSH server will listen on
+Port 4242  # Custom SSH port (default is 22, but changing it enhances security)
+
+# Disable root login for added security
+PermitRootLogin no  # Prevents direct login as the root user
+
+# Allow password-based authentication
+PasswordAuthentication yes  # Enables login using passwords
+
+# Disable challenge-response authentication
+ChallengeResponseAuthentication no  # Disables older, less secure authentication methods
+
+# Enable PAM (Pluggable Authentication Modules) for session management and authentication
+UsePAM yes  # Required for integrating SSH with system-wide authentication frameworks
+
+# Allow X11 forwarding for graphical applications
+X11Forwarding yes  # Permits the forwarding of X11 (graphical) sessions over SSH
+
+# Disable printing the Message of the Day (MOTD) upon login
+PrintMotd no  # Prevents displaying the default MOTD to users upon login
+
+# Accept specific environment variables from the client
+AcceptEnv LANG LC_*  # Passes language and locale-related environment variables to the server
+
+# Configure the SFTP subsystem for file transfers
+Subsystem sftp /usr/lib/openssh/sftp-server  # Defines the path to the SFTP server binary
