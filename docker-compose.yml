@@ -1,0 +1,30 @@
+# docker-compose.yml
+version: '3'
+services:
+  web:
+    build:
+      context: ./web
+    ports:
+      - "8080:80"
+      - "4243:4242"
+    networks:
+      - ft_onion_network
+
+  tor:
+    build:
+      context: ./tor
+    user: "102:102"
+    depends_on:
+      - web
+    volumes:
+      - ./tor/torrc:/etc/tor/torrc
+      - tor_hidden:/var/lib/tor/hidden_service
+    networks:
+      - ft_onion_network
+
+volumes:
+  tor_hidden:
+
+networks:
+  ft_onion_network:
+    driver: bridge

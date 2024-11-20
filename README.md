@@ -1,7 +1,5 @@
 # ft_onion
 
-docker build -t onion-service .
+docker-compose down && docker-compose up -d
 
-docker run -d onion-service
-
-docker exec <container_id> cat /var/lib/tor/hidden_service/hostname
+docker exec -it ft_onion-tor-1 cat /var/lib/tor/hidden_service/hostname
