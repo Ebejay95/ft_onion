@@ -1,0 +1,34 @@
+# docker-compose.yml
+
+services:
+  # Service for the web server
+  web:
+    build:
+      context: ./web  # Path to the Dockerfile and context for the web server build
+    ports:
+      - "8080:80"  # Maps port 8080 on the host to port 80 inside the container (HTTP)
+      - "4243:4242"  # Maps port 4243 on the host to port 4242 inside the container (SSH)
+    networks:
+      - ft_onion_network  # Connects this service to the ft_onion_network
+
+  # Service for the Tor proxy
+  tor:
+    build:
+      context: ./tor  # Path to the Dockerfile and context for the Tor service build
+    user: "102:102"  # Runs the container as a specific non-root user (UID:GID)
+    depends_on:
+      - web  # Ensures the Tor service starts only after the web service is up
+    volumes:
+      - ./tor/torrc:/etc/tor/torrc  # Mounts a custom Tor configuration file into the container
+      - tor_hidden:/var/lib/tor/hidden_service  # Persists the Tor hidden service data
+    networks:
+      - ft_onion_network  # Connects this service to the ft_onion_network
+
+# Define named volumes
+volumes:
+  tor_hidden:  # Volume to persist Tor's hidden service data across container restarts
+
+# Define custom networks
+networks:
+  ft_onion_network:
+    driver: bridge  # Creates an isolated bridge network for container communication
