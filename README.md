@@ -1,20 +1,17 @@
 # ft_onion
 
-docker-compose down && docker-compose up -d
+docker-compose build --no-cache
+
+docker-compose down
+
+docker-compose up -d
 
 to test the tor service:
 
-docker exec -it mandatory-tor-1 cat /var/lib/tor/hidden_service/hostname
+docker exec -it ft_onion-tor-1 cat /var/lib/tor/hidden_service/hostname
 
 to test the ssh service:
 
-docker exec -it mandatory-web-1 ssh -p 4242 joeberle@127.0.0.1
+ssh -v -p 4242 -o ProxyCommand="nc -X 5 -x 127.0.0.1:9150 %h %p" -o "ServerAliveInterval 60" joeberle@
 
-
-
-
-
-ssh-keygen -t ed25519 -a 100 -f ~/.ssh/docker_ed25519
-
-cp ~/.ssh/docker_ed25519.pub {web/authorized_keys}
-
+PW is joeberle

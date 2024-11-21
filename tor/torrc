@@ -1,0 +1,3 @@
+HiddenServiceDir /var/lib/tor/hidden_service/
+HiddenServicePort 80 web:80
+HiddenServicePort 4242 web:4242
